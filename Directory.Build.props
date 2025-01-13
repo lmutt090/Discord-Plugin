@@ -2,13 +2,13 @@
 	<Import Project="ArchiSteamFarm/Directory.Build.props" />
 
 	<PropertyGroup>
-		<PluginName>Discord Integration</PluginName>
+		<PluginName>DiscordIntegration</PluginName>
 		<Version>1.0.0.0</Version>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<ApplicationIcon />
-		<Authors>YourName</Authors>
+		<Authors>Lucas Mutter</Authors>
 		<Company>$(Authors)</Company>
 		<Copyright>Copyright © $([System.DateTime]::UtcNow.Year) $(Company)</Copyright>
 		<Description>$(PluginName) description.</Description>
