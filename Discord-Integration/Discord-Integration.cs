@@ -3,6 +3,9 @@ using System;
 using System.Threading.Tasks;
 using ArchiSteamFarm.Plugins;
 using ArchiSteamFarm.Steam;
+using DiscordRPC;
+using IBotSteamClient;
+using DiscordRpcClient;
 
 namespace DiscordIntegration {
     public class DiscordIntegrationPlugin : IBotSteamClient
