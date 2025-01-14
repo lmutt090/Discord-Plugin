@@ -17,7 +17,7 @@ namespace DiscordIntegration {
             _discordClient.Initialize();
         }
 
-        public string Name => "Discord-Integration";
+        public string Name => "DiscordIntegration";
 
         public Version Version => new Version(1, 0, 0, 0);
 
@@ -25,20 +25,12 @@ namespace DiscordIntegration {
             ASF.ArchiLogger.LogGenericInfo("Discord-Integration plugin loaded successfully.");
         }
 
-        public async Task OnConnected(Bot bot, SteamClient steamClient) {
-            // Update Discord status when the bot connects to Steam
-            UpdateDiscordStatus(bot, "Connected to Steam");
-        }
-
-        public async Task OnDisconnected(Bot bot, SteamClient steamClient) {
-            // Clear Discord status when the bot disconnects from Steam
-            UpdateDiscordStatus(bot, "Disconnected from Steam");
-        }
-
         public void UpdateDiscordStatus(Bot bot, string status) {
             if (!_discordClient.IsInitialized) {
                 ASF.ArchiLogger.LogGenericError("Discord client not initialized.");
                 return;
+            } else {
+                ASF.ArchiLogger.LogGenericInfo("Discord client is detected and is now displaying status");
             }
 
             // Set Discord presence
