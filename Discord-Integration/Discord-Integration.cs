@@ -4,23 +4,20 @@ using System.Threading.Tasks;
 using ArchiSteamFarm.Plugins;
 using ArchiSteamFarm.Steam;
 using DiscordRPC;
-using IBotSteamClient;
-using DiscordRpcClient;
 
 namespace DiscordIntegration {
-    public class DiscordIntegrationPlugin : IBotSteamClient
-    {
+    public class DiscordIntegrationPlugin : IBotPlugin, IDisposable {
         private readonly DiscordRpcClient _discordClient;
 
-        public DiscordIntegrationPlugin()
-        {
+        public DiscordIntegrationPlugin() {
             // Initialize the Discord RPC client with the application ID
             _discordClient = new DiscordRpcClient("1328446672132505680");
+            _discordClient.OnReady += (sender, e) => ASF.ArchiLogger.LogGenericInfo($"Connected to Discord as {e.User.Username}");
+            _discordClient.OnError += (sender, e) => ASF.ArchiLogger.LogGenericError($"Discord RPC Error: {e.Message}");
             _discordClient.Initialize();
         }
 
         public string Name => "DiscordIntegration";
-
         public Version Version => new Version(1, 0, 0, 0);
 
         public void OnLoaded() {
@@ -31,11 +28,10 @@ namespace DiscordIntegration {
             if (!_discordClient.IsInitialized) {
                 ASF.ArchiLogger.LogGenericError("Discord client not initialized.");
                 return;
-            } else {
-                ASF.ArchiLogger.LogGenericInfo("Discord client is detected and is now displaying status");
             }
 
-            // Set Discord presence
+            ASF.ArchiLogger.LogGenericInfo("Discord client is detected and is now displaying status");
+
             _discordClient.SetPresence(new RichPresence {
                 Details = status,
                 State = $"Bot: {bot.BotName}",
@@ -50,7 +46,11 @@ namespace DiscordIntegration {
         }
 
         public void Dispose() {
-            _discordClient.Dispose();
+            if (_discordClient.IsInitialized) {
+                _discordClient.ClearPresence();
+                _discordClient.Dispose();
+            }
         }
     }
 }
+
