@@ -2,7 +2,7 @@
 	<Import Project="ArchiSteamFarm/Directory.Build.props" />
 
 	<PropertyGroup>
-		<PluginName>DiscordIntegration</PluginName>
+		<PluginName><Discord-Integration></Discord-Integration></PluginName>
 		<Version>1.0.0.0</Version>
 	</PropertyGroup>
 
